@@ -96,6 +96,19 @@ public class Lion extends Object {
                 this.kill();
             }
             
+            
+             if (this.energy > this.dna.energytoreproduce) {
+                    this.lookingformate = true;
+                } else if (this.energy < this.dna.energytoreproduce) {
+                    this.lookingformate = false;
+                }
+             
+              if (this.nexthunt <= 0) {
+                    this.lookingforfood = true;
+                } else if (this.nexthunt != 0) {
+                    this.lookingforfood = false;
+                }
+             
             this.grow();
             this.move();
             

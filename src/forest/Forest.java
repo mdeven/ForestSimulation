@@ -10,7 +10,6 @@ package forest;
  */
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.*;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Random;
@@ -21,8 +20,17 @@ import javax.swing.SwingWorker;
 
 public class Forest {
 
+    /*
+     * The variable abort is used to store the 'paused' state of the program. It
+     * is true if program is running and false if program is paused. 'timegone'
+     * is used to store the no. of years that have passed, so that when program
+     * resumes it can display the correct time.
+     */
     static boolean abort;
     static int timegone;
+    /*
+     * Create a 'Graphs' object
+     */
     static Graphs graph = new Graphs("Graphs");
     /*
      * ArrayOfAliveTrees stores all the alive trees currently in the forest.
@@ -47,7 +55,16 @@ public class Forest {
     static CopyOnWriteArrayList<LightBeam> arrayOfLightBeams = new CopyOnWriteArrayList<LightBeam>();
     static CopyOnWriteArrayList<LightBeam> arrayOfDeadBeams = new CopyOnWriteArrayList<LightBeam>();
     static CopyOnWriteArrayList<LightBeam> arrayOfLightBeamsCopy = new CopyOnWriteArrayList<LightBeam>();
-    //new array for giraffe
+    /*
+     * ArrayOfAliveGiraffes stores all the alive giraffes currently in the
+     * forest. ArrayOfDeadGiraffes is a temporary ArrayList used to store the
+     * trees that are to be deleted in the next iteration.
+     * ArrayOfReproducingGiraffesF and ArrayOfReproducingGiraffesM are also
+     * temporary ArrayLists used to store the female and male giraffes that are
+     * going to reproduce in the next iteration. ArrayOfGiraffesToBeAdded stores
+     * trees that have just been born. They will be added to the
+     * arrayOfAliveTrees in the next iteration.
+     */
     static ArrayList<giraffe> arrayOfAliveGiraffes = new ArrayList<giraffe>();
     static CopyOnWriteArrayList<giraffe> arrayOfDeadGiraffes = new CopyOnWriteArrayList<giraffe>();
     static CopyOnWriteArrayList<giraffe> arrayOfReproducingGiraffesF = new CopyOnWriteArrayList<giraffe>();
@@ -79,6 +96,10 @@ public class Forest {
          * It is also used as an iterating variable when creating trees.
          */
         double defaultspacing = (Constants.ArenaMaxX / (nooftrees + 1));
+
+        /*
+         * set abort to true since program will run after this.
+         */
         abort = true;
         /*
          * i,a and b are different iterating variables.
@@ -158,35 +179,11 @@ public class Forest {
             if (i % 2 == 0) {
                 arrayOfAliveTrees.add(i, new Tree(defaultspacing, Constants.TreeDefaultColor1));
             } else {
-                arrayOfAliveTrees.add(i, new Tree(defaultspacing,Constants.TreeDefaultColor2));
+                arrayOfAliveTrees.add(i, new Tree(defaultspacing, Constants.TreeDefaultColor2));
             }
             defaultspacing = defaultspacing + (Constants.ArenaMaxX / (nooftrees + 1));
         }
 
-
-
-        /*
-         * Create giraffes upon creation
-         *//*
-        double gspacing = Constants.ArenaMaxX / (Constants.ArenaInitialGiraffes + 1);
-        for (i = 1; i <= Constants.ArenaInitialGiraffes; i++) {
-            arrayOfAliveGiraffes.add(i, new giraffe(gspacing));
-            gspacing += Constants.ArenaMaxX / (Constants.ArenaInitialGiraffes + 1);
-
-        }*/
-
-        /*
-         * Create lions upon creation
-         */
-/*
-        double defaultlionspacing = Constants.ArenaMaxX / (Constants.ArenaInitialLions + 1);
-        for (i = 1; i <= Constants.ArenaInitialLions; i++) {
-            arrayOfAliveLions.add(i, new Lion(defaultlionspacing));
-            defaultlionspacing += Constants.ArenaMaxX / (Constants.ArenaInitialLions + 1);
-        }*/
-        /*
-         * Creates few light beams initially for the start of the simulation.
-         */
         for (a = 0; a < 275; a++) {
             for (b = 0; b < Constants.ArenaNoOfLightBeams; b++) {
                 arrayOfLightBeams.add(new LightBeam((rand.nextDouble()) * Constants.ArenaMaxX, 2 * a, 40.0));
@@ -196,7 +193,8 @@ public class Forest {
     /*
      * This comparator is used when comparing two arrays. Here we compare them
      * on the basis of the stemlengths. This comparator will be required when
-     * sorting the array based on height.
+     * sorting the array based on height. We will need this for eg, if a light
+     * beam is found in two trees, the taller one gets it
      */
     static final Comparator<Tree> comparator = new Comparator<Tree>() {
 
@@ -222,7 +220,7 @@ public class Forest {
         }
     };
     /*
-     * Comparator for giraffes.
+     * Comparator for giraffes. Based on necklength.
      */
     static final Comparator<giraffe> bigneck = new Comparator<giraffe>() {
 
@@ -248,7 +246,7 @@ public class Forest {
     };
 
     /*
-     * This function is used to DecideDirection the forest forward by some years.
+     * This function is used to move the forest forward by some years.
      */
     public static void time(int years) {
 
@@ -257,8 +255,13 @@ public class Forest {
          */
 
         int i, j, k;
-        int bornyear=2000;
-        int count=1;
+
+        /*
+         * bornyear and count variables are used to create lions one at a time
+         * and not together.
+         */
+        int bornyear = Constants.ArenaYearAfterLionsToBeAdded;
+        int count = 1;
         /*
          * A new random obbject. Will be used while created new light beams
          */
@@ -270,6 +273,27 @@ public class Forest {
 
         for (i = timegone; i < years && abort; i++) {
 
+
+            /*
+             * Add Giraffes and Lions at the right time.
+             */
+
+            if (i == Constants.ArenaYearAfterGiraffesToBeAdded) {
+                int p;
+                double gspacing = Constants.ArenaMaxX / (Constants.ArenaInitialGiraffes + 1);
+                for (p = 1; p <= Constants.ArenaInitialGiraffes; p++) {
+                    arrayOfAliveGiraffes.add(p, new giraffe(gspacing));
+                    gspacing += Constants.ArenaMaxX / (Constants.ArenaInitialGiraffes + 1);
+
+                }
+            }
+
+            if (i == bornyear && Constants.ArenaInitialLions != 0) {
+                arrayOfAliveLions.add(count++, new Lion(rand.nextDouble() * Constants.ArenaMaxX));
+                if ((bornyear + Constants.lmaxage / Constants.ArenaInitialLions) < (2000 + Constants.lmaxage)) {
+                    bornyear += Constants.lmaxage / Constants.ArenaInitialLions;
+                }
+            }
             /*
              * Clear Dead Trees.
              */
@@ -317,8 +341,6 @@ public class Forest {
             for (Tree t : arrayOfAliveTrees) {
                 if (t != null) {
                     t.tick();
-                    //if(i==21)
-                    //System.out.println(t.x);
                 }
             }
 
@@ -358,17 +380,14 @@ public class Forest {
             for (Tree t : arrayOfReproducingTrees) {
                 if (t != null && t.readyToReproduce) {
                     for (Tree t2 : arrayOfReproducingTrees) {
-                        if (t2 != null && t != t2 && (Math.abs((t2.x - t.x)) <= Constants.TreeDistToRepr) && (Forest.RGBDistance(t.color, t2.color) <= Constants.TreeColDistToRepr&&t2.readyToReproduce)) {
-                             if (!t.readyToReproduce) {
+                        if (t2 != null && t != t2 && (Math.abs((t2.x - t.x)) <= Constants.TreeDistToRepr) && (Forest.RGBDistance(t.color, t2.color) <= Constants.TreeColDistToRepr && t2.readyToReproduce)) {
+                            if (!t.readyToReproduce) {
                                 break;
                             }
-                            
+
                             Tree.CreateSeed(t, t2);
                             t.readyToReproduce = false;
                             t2.readyToReproduce = false;
-                            //System.out.println(t.x+" "+t2.x);
-                          
-
                         }
                     }
                 }
@@ -409,21 +428,6 @@ public class Forest {
             arrayOfReproducingLionsF.clear();
             arrayOfReproducingLionsM.clear();
 
-            for (Lion l : arrayOfAliveLions) {
-                if (l != null && l.energy > l.dna.energytoreproduce) {
-                    l.lookingformate = true;
-                } else if (l != null && l.energy < l.dna.energytoreproduce) {
-                    l.lookingformate = false;
-                }
-            }
-
-            for (Lion l : arrayOfAliveLions) {
-                if (l != null && l.nexthunt <= 0) {
-                    l.lookingforfood = true;
-                } else if (l != null && l.nexthunt != 0) {
-                    l.lookingforfood = false;
-                }
-            }
             /*
              * Sorts the array based on the comparator,i.e. height.
              */
@@ -459,38 +463,21 @@ public class Forest {
                 }
             }
 
-            if(i==1000){
-                int p;
-                double gspacing = Constants.ArenaMaxX / (Constants.ArenaInitialGiraffes + 1);
-        for (p= 1; p <= Constants.ArenaInitialGiraffes; p++) {
-            arrayOfAliveGiraffes.add(p, new giraffe(gspacing));
-            gspacing += Constants.ArenaMaxX / (Constants.ArenaInitialGiraffes + 1);
 
-        }
-            }
-            
-            if (i==bornyear&&Constants.ArenaInitialLions!=0){
-                //int p;
-                //double defaultlionspacing = Constants.ArenaMaxX / (Constants.ArenaInitialLions + 1);
-                //for (p= 1; p <= Constants.ArenaInitialLions; p++) {
-                arrayOfAliveLions.add(count++, new Lion(rand.nextDouble()*Constants.ArenaMaxX));
-                //defaultlionspacing += Constants.ArenaMaxX / (Constants.ArenaInitialLions + 1);
-                if((bornyear+Constants.lmaxage/Constants.ArenaInitialLions)< (2000+Constants.lmaxage)){
-                    bornyear+=Constants.lmaxage/Constants.ArenaInitialLions;
+
+            Constants.restperiod = 10 + (int) 2 * arrayOfAliveLions.size();
+            for (giraffe g : Forest.arrayOfAliveGiraffes) {
+                if (g != null) {
+                    g.eatingcapacity = 15 - Forest.arrayOfAliveGiraffes.size() / 15.0;
                 }
             }
 
-            Constants.restperiod= 10 + (int)2*arrayOfAliveLions.size();
-            //System.out.println(Constants.restperiod);
-            for(giraffe g:Forest.arrayOfAliveGiraffes)
-                if(g!=null)
-                    g.eatingcapacity=15-Forest.arrayOfAliveGiraffes.size()/15.0;
-           // System.out.println(14-Forest.arrayOfAliveGiraffes.size()/20.0);
 
             /*
-             * Remove all dead trees and light beams again before reloading the
-             * Arena.
+             * Remove all dead trees,light beams,giraffes,lions again before
+             * reloading the Arena.
              */
+
             arrayOfAliveTrees.removeAll(arrayOfDeadTrees);
             arrayOfDeadTrees.clear();
             arrayOfLightBeams.removeAll(arrayOfDeadBeams);
@@ -501,28 +488,18 @@ public class Forest {
             arrayOfAliveLionsCopy.addAll(arrayOfAliveLions);
 
 
-
-
             /*
-             * Reload the Arena with updated trees.
+             * Update graph every 100 years.
              */
-
-            gui.Arena.repaint();
-            gui.Arena.revalidate();
-
-            //System.out.println("Stage 1.5");
             if (i % 100 == 0) {
                 Graphs.SeriesPlantHeight.add(i, averageheight());
-                Graphs.SeriesTreePopulation.add(i, arrayOfAliveTrees.size()-1);
-             //   Graphs.SeriesLeafArea.add(i, 20 * averageleafarea());
-                Graphs.SeriesGiraffePopulation.add(i, Forest.arrayOfAliveGiraffes.size()-1);
-                // System.out.println(arrayOfAliveGiraffes.size()+" "+Forest.gaverageheight()+" ");
-                Graphs.SeriesGiraffeHeight.add(i, gaverageheight());
-                Graphs.SeriesLionPopulation.add(i,arrayOfAliveLions.size()-1);
-                Graphs.SeriesGiraffeNeckLength.add(i, gaveragenecklength());
+                Graphs.SeriesTreePopulation.add(i, arrayOfAliveTrees.size() - 1);
+                Graphs.SeriesGiraffePopulation.add(i, Forest.arrayOfAliveGiraffes.size() - 1);
+                Graphs.SeriesGiraffeHeight.add(i, GiraffeAvgHeight());
+                Graphs.SeriesLionPopulation.add(i, arrayOfAliveLions.size() - 1);
+                Graphs.SeriesGiraffeNeckLength.add(i, GiraffeAvgNL());
                 Graphs.dataset.removeAllSeries();
                 Graphs.dataset.addSeries(Graphs.SeriesPlantHeight);
-//                Graphs.dataset.addSeries(Graphs.SeriesLeafArea);
                 Graphs.dataset.addSeries(Graphs.SeriesTreePopulation);
                 Graphs.dataset.addSeries(Graphs.SeriesGiraffePopulation);
                 Graphs.dataset.addSeries(Graphs.SeriesGiraffeHeight);
@@ -530,7 +507,7 @@ public class Forest {
                 Graphs.dataset.addSeries(Graphs.SeriesLionPopulation);
                 graph.repaint();
             }
-//System.out.println("Stage 1.6");
+
 
 
 
@@ -539,6 +516,7 @@ public class Forest {
              * draw the trees. This is needed because we cannot iterate over the
              * original array to paint it and also modify it at the same time.
              */
+
             arrayOfAliveTreesCopy.clear();
             arrayOfAliveTreesCopy.addAll(arrayOfAliveTrees);
 
@@ -548,55 +526,75 @@ public class Forest {
             arrayOfAliveGiraffesCopy.clear();
             arrayOfAliveGiraffesCopy.addAll(arrayOfAliveGiraffes);
 
-            gui.LabelNumberOfTrees.setText(arrayOfAliveTreesCopy.size()-1 + "");
-            gui.LabelTAvgHeight.setText(Math.round(averageheight()*100)/100.0 + "");
-            gui.LabelAverageLeafArea.setText(Math.round(100*averageleafarea())/100.0 + "");
-            gui.LabelYearsPassed.setText("" + (i + 1));
-            gui.LabelNumberOfGiraffes.setText(arrayOfAliveGiraffesCopy.size()-1+"");
-            gui.LabelNumberOfLions.setText(arrayOfAliveLionsCopy.size()-1+"");
-            gui.LabelGAvgHeight.setText(Math.round(100*Forest.gaverageheight())/100.0+"");
-            gui.LabelGAvgNeckLength.setText(Math.round(100*Forest.gaveragenecklength())/100.0+"");
-            
-            
-            for(Tree t:Forest.arrayOfAliveTrees){
-                if(t!=null&&t.isSelected){
-                     gui.LabelID.setText(t.id + "");
-                gui.LabelSelectedAge.setText(t.age + "");
-                gui.LabelSelectedHeight.setText(((Math.round(t.stemlength * 100)) / 100.0) + "");
-                gui.LabelSelectedLeafArea.setText(((Math.round(t.leafarea * 100)) / 100.0) + "");
-                gui.LabelSelectedEnergy.setText(Math.round(t.energy * 100) / 100.0 + "");
-                }
-            }
-            
-            for(giraffe g:Forest.arrayOfAliveGiraffes){
-                    
-                if(g!=null&&g.isSelected){
-                gui.LabelGID.setText(g.id + "");
-                gui.LabelSelectedGAge.setText(g.age + "");
-                gui.LabelSelectedGHeight.setText(((Math.round(g.bodylength * 100)) / 100.0) + "");
-                gui.LabelSelectedGEnergy.setText(Math.round(g.energy * 100) / 100.0 + "");
-                if(g.isHungry)
-                    gui.LabelSelectedGStatus.setText("Looking for food");
-                if(g.LookingForFemale)
-                    gui.LabelSelectedGStatus.setText("Looking for females");
-                if(g.isHungry==false&&g.LookingForFemale==false)
-                    gui.LabelSelectedGStatus.setText("Loitering");
-                }
-            }
-            
-            
-            for(Lion l: Forest.arrayOfAliveLions){
-                if(l!=null&&l.isSelected){
-                   gui.LabelLID.setText(l.id + "");
-                gui.LabelLAge.setText(l.age + "");
-                gui.LabelSelectedLSize.setText(((Math.round(l.currentsize * 100)) / 100.0) + "");
-                gui.LabelLEnergy.setText(Math.round(l.energy * 100) / 100.0 + "");
-                }
-            }
-            if(arrayOfAliveTrees.size()<=1&&arrayOfAliveGiraffes.size()<=1&&arrayOfAliveLions.size()<=1)
-                Forest.abort=false;
-            
 
+            /*
+             * Update GUI Components.
+             */
+            gui.LabelNumberOfTrees.setText(arrayOfAliveTreesCopy.size() - 1 + "");
+            gui.LabelTAvgHeight.setText(Math.round(averageheight() * 100) / 100.0 + "");
+            gui.LabelAverageLeafArea.setText(Math.round(100 * averageleafarea()) / 100.0 + "");
+            gui.LabelYearsPassed.setText("" + (i + 1));
+            gui.LabelNumberOfGiraffes.setText(arrayOfAliveGiraffesCopy.size() - 1 + "");
+            gui.LabelNumberOfLions.setText(arrayOfAliveLionsCopy.size() - 1 + "");
+            gui.LabelGAvgHeight.setText(Math.round(100 * Forest.GiraffeAvgHeight()) / 100.0 + "");
+            gui.LabelGAvgNeckLength.setText(Math.round(100 * Forest.GiraffeAvgNL()) / 100.0 + "");
+
+            /*
+             * Update GUI info for selected tree/giraffe/lion
+             */
+            for (Tree t : Forest.arrayOfAliveTrees) {
+                if (t != null && t.isSelected) {
+                    gui.LabelID.setText(t.id + "");
+                    gui.LabelSelectedAge.setText(t.age + "");
+                    gui.LabelSelectedHeight.setText(((Math.round(t.stemlength * 100)) / 100.0) + "");
+                    gui.LabelSelectedLeafArea.setText(((Math.round(t.leafarea * 100)) / 100.0) + "");
+                    gui.LabelSelectedEnergy.setText(Math.round(t.energy * 100) / 100.0 + "");
+                }
+            }
+
+            for (giraffe g : Forest.arrayOfAliveGiraffes) {
+
+                if (g != null && g.isSelected) {
+                    gui.LabelGID.setText(g.id + "");
+                    gui.LabelSelectedGAge.setText(g.age + "");
+                    gui.LabelSelectedGHeight.setText(((Math.round(g.bodylength * 100)) / 100.0) + "");
+                    gui.LabelSelectedGEnergy.setText(Math.round(g.energy * 100) / 100.0 + "");
+                    if (g.isHungry) {
+                        gui.LabelSelectedGStatus.setText("Looking for food");
+                    }
+                    if (g.LookingForFemale) {
+                        gui.LabelSelectedGStatus.setText("Looking for females");
+                    }
+                    if (g.isHungry == false && g.LookingForFemale == false) {
+                        gui.LabelSelectedGStatus.setText("Loitering");
+                    }
+                }
+            }
+
+
+            for (Lion l : Forest.arrayOfAliveLions) {
+                if (l != null && l.isSelected) {
+                    gui.LabelLID.setText(l.id + "");
+                    gui.LabelLAge.setText(l.age + "");
+                    gui.LabelSelectedLSize.setText(((Math.round(l.currentsize * 100)) / 100.0) + "");
+                    gui.LabelLEnergy.setText(Math.round(l.energy * 100) / 100.0 + "");
+                }
+            }
+            if (arrayOfAliveTrees.size() <= 1 && arrayOfAliveGiraffes.size() <= 1 && arrayOfAliveLions.size() <= 1) {
+                Forest.abort = false;
+            }
+
+
+            /*
+             * Reload the Arena with updated trees.
+             */
+
+            gui.Arena.repaint();
+            gui.Arena.revalidate();
+
+            /*
+             * Sleep for some time
+             */
             try {
                 Thread.sleep(Constants.ArenaRate);
             } catch (InterruptedException ex) {
@@ -645,7 +643,7 @@ public class Forest {
     /*
      * Computes average height of the Giraffes.
      */
-    public static double gaverageheight() {
+    public static double GiraffeAvgHeight() {
         if (arrayOfAliveGiraffes.size() <= 1) {
             return 0;
         }
@@ -660,7 +658,10 @@ public class Forest {
         return avght;
     }
 
-    public static double gaveragenecklength() {
+    /*
+     * Calculate average giraffe neck length
+     */
+    public static double GiraffeAvgNL() {
         if (arrayOfAliveGiraffes.size() <= 1) {
             return 0;
         }
@@ -674,7 +675,10 @@ public class Forest {
         }
         return avght;
     }
-    
+    /*
+     * Calculate average x coordinate for giraffes
+     */
+
     public static double gaverageX() {
         if (arrayOfAliveGiraffes.size() <= 1) {
             return 0;
@@ -689,7 +693,10 @@ public class Forest {
         }
         return avgx;
     }
-    
+
+    /*
+     * Calculate average x coordinate for lions
+     */
     public static double laverageX() {
         if (arrayOfAliveLions.size() <= 1) {
             return 0;
@@ -704,7 +711,10 @@ public class Forest {
         }
         return avgx;
     }
-    
+    /*
+     * Calculate average y coordinate for lions
+     */
+
     public static double laverageY() {
         if (arrayOfAliveLions.size() <= 1) {
             return 0;
@@ -719,11 +729,10 @@ public class Forest {
         }
         return avgy;
     }
-    
+
     /*
      * The run function. Is called when someone clicks the 'run' button.
      */
-
     public static void run() {
         /*
          * Creates a forest with 'initialtres' no. of trees
@@ -734,13 +743,14 @@ public class Forest {
          * Advances the forest forward by 'ArenaMoveByYears' years
          */
         Forest.time(Constants.ArenaMoveByYears);
-        int i;
 
-        //System.out.println(RGBDistance(Color.red,Color.red));
     }
+    /*
+     * Is called when the stop button is pressed. Clears all data.
+     */
 
     public static void stop() {
-       Forest.timegone=0;
+        Forest.timegone = 0;
         abort = false;
         arrayOfAliveTrees.clear();
         arrayOfDeadTrees.clear();
@@ -765,15 +775,17 @@ public class Forest {
         gui.Arena.revalidate();
         Graphs.SeriesPlantHeight.clear();
         Graphs.SeriesTreePopulation.clear();
-//        Graphs.SeriesLeafArea.clear();
         Graphs.SeriesGiraffePopulation.clear();
         Graphs.SeriesGiraffeNeckLength.clear();
         Graphs.SeriesGiraffeHeight.clear();
         Graphs.SeriesLionPopulation.clear();
         Forest.graph.repaint();
-       
+
 
     }
+    /*
+     * Is called when the pause button is clicked
+     */
 
     public static void pause() {
         if (abort == true) {
@@ -804,6 +816,10 @@ public class Forest {
             s.execute();
         }
     }
+    /*
+     * Is used to compute 'distance' between two colours assuming the r,g,b
+     * values to be like 3-d space
+     */
 
     public static double RGBDistance(Color c1, Color c2) {
         double diffr = c1.getRed() - c2.getRed();
@@ -814,23 +830,21 @@ public class Forest {
 
     }
 
-    public static Color AverageColor(Color c1, Color c2) {
-        int bavg = (c1.getBlue() + c2.getBlue()) / 2;
-        int ravg = (c1.getRed() + c2.getRed()) / 2;
-        int gavg = (c1.getGreen() + c2.getGreen()) / 2;
-
-        return new Color(ravg, gavg, bavg);
-    }
-
+    /*
+     * Used to mutate the colour
+     */
     public static Color MutateColor(Color c) {
         Random rand = new Random();
-        int r=c.getRed(),g=c.getGreen(),b=c.getBlue();
-        if(rand.nextBoolean())
+        int r = c.getRed(), g = c.getGreen(), b = c.getBlue();
+        if (rand.nextBoolean()) {
             r = (int) (c.getRed() - Constants.TreeMutCDist + (2 * Constants.TreeMutCDist * rand.nextDouble()));
-       if(rand.nextBoolean())
-           g = (int) (c.getGreen() - Constants.TreeMutCDist + (2 * Constants.TreeMutCDist * rand.nextDouble()));       
-        if(rand.nextBoolean())
+        }
+        if (rand.nextBoolean()) {
+            g = (int) (c.getGreen() - Constants.TreeMutCDist + (2 * Constants.TreeMutCDist * rand.nextDouble()));
+        }
+        if (rand.nextBoolean()) {
             b = (int) (c.getBlue() - Constants.TreeMutCDist + (2 * Constants.TreeMutCDist * rand.nextDouble()));
+        }
 
         if (r > 255) {
             r = 255;
