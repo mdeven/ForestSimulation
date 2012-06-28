@@ -35,7 +35,8 @@ public class Constants {
     
     static int ArenaMoveByYears=100;
     
-    
+    static int ArenaYearAfterGiraffesToBeAdded=1000;
+    static int ArenaYearAfterLionsToBeAdded=2000;
     
     /*
      * All variable Tree Parameters
@@ -127,4 +128,6 @@ public class Constants {
     
     static double GEnergyForMoving=0.03;
     static double LEnergyForMoving=0.04;
+    
+    
 }

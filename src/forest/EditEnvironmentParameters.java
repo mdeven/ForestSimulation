@@ -31,7 +31,7 @@ public class EditEnvironmentParameters extends javax.swing.JFrame {
     private void initComponents() {
 
         LabelMutP = new javax.swing.JLabel();
-        LabelWindBias = new javax.swing.JLabel();
+        LabelEnergyFromLight = new javax.swing.JLabel();
         slider1 = new javax.swing.JSlider();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -46,7 +46,7 @@ public class EditEnvironmentParameters extends javax.swing.JFrame {
         jButton8 = new javax.swing.JButton();
         slider2 = new javax.swing.JSlider();
         LabelMutP1 = new javax.swing.JLabel();
-        LabelWindBias1 = new javax.swing.JLabel();
+        LabelWindBias = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
@@ -62,11 +62,11 @@ public class EditEnvironmentParameters extends javax.swing.JFrame {
         getContentPane().add(LabelMutP);
         LabelMutP.setBounds(280, 60, 130, 17);
 
-        LabelWindBias.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        LabelWindBias.setText("120");
-        LabelWindBias.setPreferredSize(new java.awt.Dimension(30, 14));
-        getContentPane().add(LabelWindBias);
-        LabelWindBias.setBounds(440, 60, 60, 20);
+        LabelEnergyFromLight.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        LabelEnergyFromLight.setText("120");
+        LabelEnergyFromLight.setPreferredSize(new java.awt.Dimension(30, 14));
+        getContentPane().add(LabelEnergyFromLight);
+        LabelEnergyFromLight.setBounds(440, 60, 60, 20);
 
         slider1.setMajorTickSpacing(10);
         slider1.setToolTipText("");
@@ -184,11 +184,11 @@ public class EditEnvironmentParameters extends javax.swing.JFrame {
         getContentPane().add(LabelMutP1);
         LabelMutP1.setBounds(280, 20, 130, 17);
 
-        LabelWindBias1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        LabelWindBias1.setText("50");
-        LabelWindBias1.setPreferredSize(new java.awt.Dimension(30, 14));
-        getContentPane().add(LabelWindBias1);
-        LabelWindBias1.setBounds(440, 20, 60, 20);
+        LabelWindBias.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        LabelWindBias.setText("50");
+        LabelWindBias.setPreferredSize(new java.awt.Dimension(30, 14));
+        getContentPane().add(LabelWindBias);
+        LabelWindBias.setBounds(440, 20, 60, 20);
         getContentPane().add(jSeparator2);
         jSeparator2.setBounds(0, 100, 560, 2);
         getContentPane().add(jSeparator3);
@@ -208,7 +208,7 @@ public class EditEnvironmentParameters extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void slider1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_slider1StateChanged
-        LabelWindBias1.setText(slider1.getValue() + "");
+        LabelWindBias.setText(slider1.getValue() + "");
         Constants.ArenaWindBias=slider1.getValue()/100.0;
     }//GEN-LAST:event_slider1StateChanged
 
@@ -314,7 +314,7 @@ public class EditEnvironmentParameters extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void slider2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_slider2StateChanged
-        LabelWindBias1.setText(slider1.getValue() + "");
+        LabelEnergyFromLight.setText(slider2.getValue() + "");
         Constants.ArenaEnergyOfLightBeam=(int)(slider1.getValue()/100);
     }//GEN-LAST:event_slider2StateChanged
 
@@ -360,10 +360,10 @@ public class EditEnvironmentParameters extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel LabelEnergyFromLight;
     private javax.swing.JLabel LabelMutP;
     private javax.swing.JLabel LabelMutP1;
     private javax.swing.JLabel LabelWindBias;
-    private javax.swing.JLabel LabelWindBias1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
