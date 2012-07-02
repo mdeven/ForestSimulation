@@ -27,7 +27,7 @@ public class AutosomalGene {
         }
     }
 
-    public AutosomalGene(giraffe parentfemale, giraffe parentmale) {
+    public AutosomalGene(Giraffe parentfemale, Giraffe parentmale) {
 
         if (parentfemale.dna.camouflage.fromFemaleParent && parentfemale.dna.camouflage.fromMaleParent) {
             this.fromFemaleParent = true;

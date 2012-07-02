@@ -6,12 +6,12 @@ import javax.swing.*;
 import javax.swing.SwingWorker;
 import org.jfree.ui.RefineryUtilities;
 
-public class gui extends javax.swing.JFrame {
+public class GUI extends javax.swing.JFrame {
 
     /**
      * Creates new form
      */
-    public gui() {
+    public GUI() {
         initComponents();
     }
 
@@ -24,7 +24,7 @@ public class gui extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Arena = new tempgui();
+        Arena = new Arena();
         jPanel1 = new javax.swing.JPanel();
         CheckBoxShowLight = new javax.swing.JCheckBox();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -631,9 +631,8 @@ public class gui extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(LabelNumberOfGiraffes, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jLabel25)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel26)
-                        .addComponent(LabelGAvgNeckLength, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel26, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(LabelGAvgNeckLength, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(LabelGAvgHeight, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -671,7 +670,7 @@ public class gui extends javax.swing.JFrame {
             s.execute();
         }
         catch(Exception e){
-            JOptionPane.showMessageDialog(gui.g, "An Error Occured. Please try again.", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(GUI.g, "An Error Occured. Please try again.", "Warning", JOptionPane.WARNING_MESSAGE);
         }
 
     }//GEN-LAST:event_ButtonRunActionPerformed
@@ -684,16 +683,16 @@ public class gui extends javax.swing.JFrame {
 
         
         Forest.stop();
-         gui.LabelTAvgHeight.setText("");
-        gui.LabelNumberOfTrees.setText("");
-        gui.LabelYearsPassed.setText("");
-        gui.LabelAverageLeafArea.setText("");
-        gui.ButtonPaused.setText("Pause");
-        gui.LabelGAvgHeight.setText("");
-        gui.LabelNumberOfGiraffes.setText("");
-        gui.LabelNumberOfLions.setText("");
-        gui.LabelGAvgNeckLength.setText("");
-        gui.LabelSelectedAge.setText("");
+         GUI.LabelTAvgHeight.setText("");
+        GUI.LabelNumberOfTrees.setText("");
+        GUI.LabelYearsPassed.setText("");
+        GUI.LabelAverageLeafArea.setText("");
+        GUI.ButtonPaused.setText("Pause");
+        GUI.LabelGAvgHeight.setText("");
+        GUI.LabelNumberOfGiraffes.setText("");
+        GUI.LabelNumberOfLions.setText("");
+        GUI.LabelGAvgNeckLength.setText("");
+        GUI.LabelSelectedAge.setText("");
         LabelID.setText("");
         LabelSelectedAge.setText(" ");
         LabelSelectedHeight.setText(" ");
@@ -739,9 +738,9 @@ public class gui extends javax.swing.JFrame {
 
         }
 
-        for (giraffe t : Forest.arrayOfAliveGiraffes) {
+        for (Giraffe t : Forest.arrayOfAliveGiraffes) {
             if (t != null && t.ContainsPoint(p.x, p.y)) {
-                for (giraffe t2 : Forest.arrayOfAliveGiraffes) {
+                for (Giraffe t2 : Forest.arrayOfAliveGiraffes) {
                     if (t2 != null) {
                         t2.isSelected = false;
                     }
@@ -782,8 +781,8 @@ public class gui extends javax.swing.JFrame {
         
 
 
-        gui.Arena.repaint();
-        gui.Arena.revalidate();
+        GUI.Arena.repaint();
+        GUI.Arena.revalidate();
 
 
     }//GEN-LAST:event_ArenaMouseClicked
@@ -820,8 +819,8 @@ public class gui extends javax.swing.JFrame {
                 t.kill();
             }
         }
-        gui.Arena.repaint();
-        gui.Arena.revalidate();
+        GUI.Arena.repaint();
+        GUI.Arena.revalidate();
     }//GEN-LAST:event_ButtonKillPlantActionPerformed
 
     private void ButtonEditTreeParametersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEditTreeParametersActionPerformed
@@ -837,17 +836,17 @@ public class gui extends javax.swing.JFrame {
     }//GEN-LAST:event_ButtonEditGiraffeParametersActionPerformed
 
     private void ButtonKillGiraffeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonKillGiraffeActionPerformed
-        for (giraffe t : Forest.arrayOfAliveGiraffes) {
+        for (Giraffe t : Forest.arrayOfAliveGiraffes) {
             if (t != null && t.isSelected) {
                 t.kill();
             }
         }
-        gui.Arena.repaint();
-        gui.Arena.revalidate();
+        GUI.Arena.repaint();
+        GUI.Arena.revalidate();
     }//GEN-LAST:event_ButtonKillGiraffeActionPerformed
 
     private void ButtonGetGiraffeGenesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonGetGiraffeGenesActionPerformed
-        for (giraffe t : Forest.arrayOfAliveGiraffes) {
+        for (Giraffe t : Forest.arrayOfAliveGiraffes) {
             if (t != null && t.isSelected) {
                 g4.LabelGID.setText(t.id + "");
                 g4.LabelGMaxAge.setText(t.dna.maxage + "");
@@ -882,8 +881,8 @@ public class gui extends javax.swing.JFrame {
 
     private void CheckBoxShowLightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckBoxShowLightActionPerformed
         Constants.ArenaShowLight = CheckBoxShowLight.isSelected();
-        gui.Arena.repaint();
-        gui.Arena.revalidate();
+        GUI.Arena.repaint();
+        GUI.Arena.revalidate();
     }//GEN-LAST:event_CheckBoxShowLightActionPerformed
 
     private void ButtonGetLionGenesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonGetLionGenesActionPerformed
@@ -924,8 +923,8 @@ public class gui extends javax.swing.JFrame {
                 l.kill();
             }
         }
-        gui.Arena.repaint();
-        gui.Arena.revalidate();
+        GUI.Arena.repaint();
+        GUI.Arena.revalidate();
     }//GEN-LAST:event_ButtonKillLionActionPerformed
 
     /**
@@ -949,13 +948,13 @@ public class gui extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -966,7 +965,7 @@ public class gui extends javax.swing.JFrame {
 
             public void run() {
 
-                g = new gui();
+                g = new GUI();
                 g.setVisible(true);
 
                 g2 = new TreeGenesDisplay();
@@ -993,7 +992,7 @@ public class gui extends javax.swing.JFrame {
         });
 
     }
-    public static gui g;
+    public static GUI g;
     public static TreeGenesDisplay g2;
     public static EditTreeParameters g3;
     public static GiraffeGenesDisplay g4;

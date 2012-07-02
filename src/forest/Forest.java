@@ -65,12 +65,12 @@ public class Forest {
      * trees that have just been born. They will be added to the
      * arrayOfAliveTrees in the next iteration.
      */
-    static ArrayList<giraffe> arrayOfAliveGiraffes = new ArrayList<giraffe>();
-    static CopyOnWriteArrayList<giraffe> arrayOfDeadGiraffes = new CopyOnWriteArrayList<giraffe>();
-    static CopyOnWriteArrayList<giraffe> arrayOfReproducingGiraffesF = new CopyOnWriteArrayList<giraffe>();
-    static CopyOnWriteArrayList<giraffe> arrayOfGiraffesToBeAdded = new CopyOnWriteArrayList<giraffe>();
-    static CopyOnWriteArrayList<giraffe> arrayOfAliveGiraffesCopy = new CopyOnWriteArrayList<giraffe>();
-    static CopyOnWriteArrayList<giraffe> arrayOfReproducingGiraffesM = new CopyOnWriteArrayList<giraffe>();
+    static ArrayList<Giraffe> arrayOfAliveGiraffes = new ArrayList<Giraffe>();
+    static CopyOnWriteArrayList<Giraffe> arrayOfDeadGiraffes = new CopyOnWriteArrayList<Giraffe>();
+    static CopyOnWriteArrayList<Giraffe> arrayOfReproducingGiraffesF = new CopyOnWriteArrayList<Giraffe>();
+    static CopyOnWriteArrayList<Giraffe> arrayOfGiraffesToBeAdded = new CopyOnWriteArrayList<Giraffe>();
+    static CopyOnWriteArrayList<Giraffe> arrayOfAliveGiraffesCopy = new CopyOnWriteArrayList<Giraffe>();
+    static CopyOnWriteArrayList<Giraffe> arrayOfReproducingGiraffesM = new CopyOnWriteArrayList<Giraffe>();
     /*
      * ArrayOfAliveLions is the main Array for Lions. ArrayOfDeadLion is a
      * temporary ArrayList used to store the Lions that are to be deleted in the
@@ -222,10 +222,10 @@ public class Forest {
     /*
      * Comparator for giraffes. Based on necklength.
      */
-    static final Comparator<giraffe> bigneck = new Comparator<giraffe>() {
+    static final Comparator<Giraffe> bigneck = new Comparator<Giraffe>() {
 
         @Override
-        public int compare(giraffe a, giraffe b) {
+        public int compare(Giraffe a, Giraffe b) {
             if (a != null && b != null) {
                 if (a.necklength > b.necklength) {
                     return -1;
@@ -282,7 +282,7 @@ public class Forest {
                 int p;
                 double gspacing = Constants.ArenaMaxX / (Constants.ArenaInitialGiraffes + 1);
                 for (p = 1; p <= Constants.ArenaInitialGiraffes; p++) {
-                    arrayOfAliveGiraffes.add(p, new giraffe(gspacing));
+                    arrayOfAliveGiraffes.add(p, new Giraffe(gspacing));
                     gspacing += Constants.ArenaMaxX / (Constants.ArenaInitialGiraffes + 1);
 
                 }
@@ -356,7 +356,7 @@ public class Forest {
             /*
              * Tick all Giraffes.
              */
-            for (giraffe g : arrayOfAliveGiraffes) {
+            for (Giraffe g : arrayOfAliveGiraffes) {
                 if (g != null) {
                     g.tick();
 
@@ -407,7 +407,7 @@ public class Forest {
             arrayOfReproducingGiraffesF.clear();
             arrayOfReproducingGiraffesM.clear();
 
-            for (giraffe g : arrayOfAliveGiraffes) {
+            for (Giraffe g : arrayOfAliveGiraffes) {
                 if (g != null && g.energy > g.dna.energytoreproduce) {
                     g.ReadyToReproduce = true;
                 } else if (g != null && g.energy < g.dna.energytoreproduce) {
@@ -466,7 +466,7 @@ public class Forest {
 
 
             Constants.restperiod = 10 + (int) 2 * arrayOfAliveLions.size();
-            for (giraffe g : Forest.arrayOfAliveGiraffes) {
+            for (Giraffe g : Forest.arrayOfAliveGiraffes) {
                 if (g != null) {
                     g.eatingcapacity = 15 - Forest.arrayOfAliveGiraffes.size() / 15.0;
                 }
@@ -530,43 +530,43 @@ public class Forest {
             /*
              * Update GUI Components.
              */
-            gui.LabelNumberOfTrees.setText(arrayOfAliveTreesCopy.size() - 1 + "");
-            gui.LabelTAvgHeight.setText(Math.round(averageheight() * 100) / 100.0 + "");
-            gui.LabelAverageLeafArea.setText(Math.round(100 * averageleafarea()) / 100.0 + "");
-            gui.LabelYearsPassed.setText("" + (i + 1));
-            gui.LabelNumberOfGiraffes.setText(arrayOfAliveGiraffesCopy.size() - 1 + "");
-            gui.LabelNumberOfLions.setText(arrayOfAliveLionsCopy.size() - 1 + "");
-            gui.LabelGAvgHeight.setText(Math.round(100 * Forest.GiraffeAvgHeight()) / 100.0 + "");
-            gui.LabelGAvgNeckLength.setText(Math.round(100 * Forest.GiraffeAvgNL()) / 100.0 + "");
+            GUI.LabelNumberOfTrees.setText(arrayOfAliveTreesCopy.size() - 1 + "");
+            GUI.LabelTAvgHeight.setText(Math.round(averageheight() * 100) / 100.0 + "");
+            GUI.LabelAverageLeafArea.setText(Math.round(100 * averageleafarea()) / 100.0 + "");
+            GUI.LabelYearsPassed.setText("" + (i + 1));
+            GUI.LabelNumberOfGiraffes.setText(arrayOfAliveGiraffesCopy.size() - 1 + "");
+            GUI.LabelNumberOfLions.setText(arrayOfAliveLionsCopy.size() - 1 + "");
+            GUI.LabelGAvgHeight.setText(Math.round(100 * Forest.GiraffeAvgHeight()) / 100.0 + "");
+            GUI.LabelGAvgNeckLength.setText(Math.round(100 * Forest.GiraffeAvgNL()) / 100.0 + "");
 
             /*
              * Update GUI info for selected tree/giraffe/lion
              */
             for (Tree t : Forest.arrayOfAliveTrees) {
                 if (t != null && t.isSelected) {
-                    gui.LabelID.setText(t.id + "");
-                    gui.LabelSelectedAge.setText(t.age + "");
-                    gui.LabelSelectedHeight.setText(((Math.round(t.stemlength * 100)) / 100.0) + "");
-                    gui.LabelSelectedLeafArea.setText(((Math.round(t.leafarea * 100)) / 100.0) + "");
-                    gui.LabelSelectedEnergy.setText(Math.round(t.energy * 100) / 100.0 + "");
+                    GUI.LabelID.setText(t.id + "");
+                    GUI.LabelSelectedAge.setText(t.age + "");
+                    GUI.LabelSelectedHeight.setText(((Math.round(t.stemlength * 100)) / 100.0) + "");
+                    GUI.LabelSelectedLeafArea.setText(((Math.round(t.leafarea * 100)) / 100.0) + "");
+                    GUI.LabelSelectedEnergy.setText(Math.round(t.energy * 100) / 100.0 + "");
                 }
             }
 
-            for (giraffe g : Forest.arrayOfAliveGiraffes) {
+            for (Giraffe g : Forest.arrayOfAliveGiraffes) {
 
                 if (g != null && g.isSelected) {
-                    gui.LabelGID.setText(g.id + "");
-                    gui.LabelSelectedGAge.setText(g.age + "");
-                    gui.LabelSelectedGHeight.setText(((Math.round(g.bodylength * 100)) / 100.0) + "");
-                    gui.LabelSelectedGEnergy.setText(Math.round(g.energy * 100) / 100.0 + "");
+                    GUI.LabelGID.setText(g.id + "");
+                    GUI.LabelSelectedGAge.setText(g.age + "");
+                    GUI.LabelSelectedGHeight.setText(((Math.round(g.bodylength * 100)) / 100.0) + "");
+                    GUI.LabelSelectedGEnergy.setText(Math.round(g.energy * 100) / 100.0 + "");
                     if (g.isHungry) {
-                        gui.LabelSelectedGStatus.setText("Looking for food");
+                        GUI.LabelSelectedGStatus.setText("Looking for food");
                     }
                     if (g.LookingForFemale) {
-                        gui.LabelSelectedGStatus.setText("Looking for females");
+                        GUI.LabelSelectedGStatus.setText("Looking for females");
                     }
                     if (g.isHungry == false && g.LookingForFemale == false) {
-                        gui.LabelSelectedGStatus.setText("Loitering");
+                        GUI.LabelSelectedGStatus.setText("Loitering");
                     }
                 }
             }
@@ -574,10 +574,10 @@ public class Forest {
 
             for (Lion l : Forest.arrayOfAliveLions) {
                 if (l != null && l.isSelected) {
-                    gui.LabelLID.setText(l.id + "");
-                    gui.LabelLAge.setText(l.age + "");
-                    gui.LabelSelectedLSize.setText(((Math.round(l.currentsize * 100)) / 100.0) + "");
-                    gui.LabelLEnergy.setText(Math.round(l.energy * 100) / 100.0 + "");
+                    GUI.LabelLID.setText(l.id + "");
+                    GUI.LabelLAge.setText(l.age + "");
+                    GUI.LabelSelectedLSize.setText(((Math.round(l.currentsize * 100)) / 100.0) + "");
+                    GUI.LabelLEnergy.setText(Math.round(l.energy * 100) / 100.0 + "");
                 }
             }
             if (arrayOfAliveTrees.size() <= 1 && arrayOfAliveGiraffes.size() <= 1 && arrayOfAliveLions.size() <= 1) {
@@ -589,8 +589,8 @@ public class Forest {
              * Reload the Arena with updated trees.
              */
 
-            gui.Arena.repaint();
-            gui.Arena.revalidate();
+            GUI.Arena.repaint();
+            GUI.Arena.revalidate();
 
             /*
              * Sleep for some time
@@ -659,7 +659,7 @@ public class Forest {
     }
 
     /*
-     * Calculate average giraffe neck length
+     * Calculate average Giraffe neck length
      */
     public static double GiraffeAvgNL() {
         if (arrayOfAliveGiraffes.size() <= 1) {
@@ -771,8 +771,8 @@ public class Forest {
         arrayOfDeadLions.clear();
         arrayOfReproducingLionsM.clear();
         arrayOfReproducingLionsF.clear();
-        gui.Arena.repaint();
-        gui.Arena.revalidate();
+        GUI.Arena.repaint();
+        GUI.Arena.revalidate();
         Graphs.SeriesPlantHeight.clear();
         Graphs.SeriesTreePopulation.clear();
         Graphs.SeriesGiraffePopulation.clear();
@@ -790,16 +790,16 @@ public class Forest {
     public static void pause() {
         if (abort == true) {
             abort = false;
-            gui.ButtonPaused.setText("Resume");
+            GUI.ButtonPaused.setText("Resume");
         } else {
             if (abort == false) {
                 abort = true;
-                gui.ButtonPaused.setText("Pause");
+                GUI.ButtonPaused.setText("Pause");
             }
 
         }
         if (abort == true) {
-            Forest.timegone = Integer.parseInt(gui.LabelYearsPassed.getText());
+            Forest.timegone = Integer.parseInt(GUI.LabelYearsPassed.getText());
             SwingWorker s = new SwingWorker<Integer, Void>() {
 
                 @Override

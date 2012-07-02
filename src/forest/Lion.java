@@ -12,7 +12,7 @@ import java.util.Random;
  */
 public class Lion extends Object {
 
-    Ldna dna;
+    LionDNA dna;
     int age;
     long id;
     int nexthunt;
@@ -34,7 +34,7 @@ public class Lion extends Object {
             this.gender = false;
         }
 
-        this.dna = new Ldna();
+        this.dna = new LionDNA();
         this.alive = true;
         this.age = 0;
         this.nexthunt = Constants.restperiod;
@@ -60,7 +60,7 @@ public class Lion extends Object {
             this.gender = false;
         }
 
-        this.dna = new Ldna(parentfemale, parentmale);
+        this.dna = new LionDNA(parentfemale, parentmale);
         this.alive = true;
         this.age = 0;
         this.nexthunt = Constants.restperiod;
@@ -145,7 +145,7 @@ public class Lion extends Object {
    public void hunt() {
         //System.out.println("safsa  " + this.x);
         if (r.nextDouble() < this.dna.preyefficiency / 100.0){
-            for (giraffe g : Forest.arrayOfAliveGiraffes) {
+            for (Giraffe g : Forest.arrayOfAliveGiraffes) {
                 if (g != null && g.alive) {
                     double vision;
                     if(g.dna.camouflage.fromFemaleParent && g.dna.camouflage.fromMaleParent)
@@ -238,7 +238,7 @@ public class Lion extends Object {
         //For X COORDINATE.
         if(r.nextBoolean()){
             int girafferight=0,giraffeleft=0;
-            for(giraffe g: Forest.arrayOfAliveGiraffes){
+            for(Giraffe g: Forest.arrayOfAliveGiraffes){
                 double vision;
                 if(g!=null){
                     if( g.dna.camouflage.fromFemaleParent && g.dna.camouflage.fromMaleParent)
