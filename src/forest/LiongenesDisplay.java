@@ -175,12 +175,12 @@ try{
             }
         }
 
-        gui.g8.setVisible(false);
+        GUI.g8.setVisible(false);
         
 }
 
 catch(Exception e){
-    JOptionPane.showMessageDialog(gui.g8, "An Error Occured.Please Try Again.", "Warning", JOptionPane.WARNING_MESSAGE);
+    JOptionPane.showMessageDialog(GUI.g8, "An Error Occured.Please Try Again.", "Warning", JOptionPane.WARNING_MESSAGE);
 }
     }//GEN-LAST:event_ButtonSaveActionPerformed
 

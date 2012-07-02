@@ -148,7 +148,7 @@ public class GiraffeGenesDisplay extends javax.swing.JFrame {
     private void ButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonSaveActionPerformed
 try{
         
-        for (giraffe t : Forest.arrayOfAliveGiraffes) {
+        for (Giraffe t : Forest.arrayOfAliveGiraffes) {
             if (t != null && t.isSelected) {
                 t.dna.maxage = Integer.parseInt(LabelGMaxAge.getText());
                 t.dna.neckbodyratio = Double.parseDouble(LabelGRatio.getText());
@@ -177,11 +177,11 @@ try{
             }
         }
 
-        gui.g4.setVisible(false);
+        GUI.g4.setVisible(false);
 }
 
 catch(Exception e){
-     JOptionPane.showMessageDialog(gui.g4, "An Error Occured.Please Try Again.", "Warning", JOptionPane.WARNING_MESSAGE);
+     JOptionPane.showMessageDialog(GUI.g4, "An Error Occured.Please Try Again.", "Warning", JOptionPane.WARNING_MESSAGE);
 }
     }//GEN-LAST:event_ButtonSaveActionPerformed
 

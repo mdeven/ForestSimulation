@@ -14,7 +14,7 @@ import java.awt.geom.*;
  *
  * @author abc
  */
-public class tempgui extends javax.swing.JPanel {
+public class Arena extends javax.swing.JPanel {
 
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
@@ -61,7 +61,7 @@ public class tempgui extends javax.swing.JPanel {
         }
 
         g2.setStroke(new BasicStroke(2.0f));
-        for (giraffe f : Forest.arrayOfAliveGiraffesCopy) {
+        for (Giraffe f : Forest.arrayOfAliveGiraffesCopy) {
 
             if (f != null && f.alive) {
                 if (f.gender == true) {

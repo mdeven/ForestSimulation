@@ -10,9 +10,9 @@ import java.util.Random;
  *
  * @author ANURAG
  */
-public class giraffe extends Object {
+public class Giraffe extends Object {
 
-    gdna dna;
+    GiraffeDNA dna;
     long id;
     int age;
     static long nextGid = 1;
@@ -38,9 +38,9 @@ public class giraffe extends Object {
     Random r = new Random();
 
     /*
-     * Constructor to initialize giraffe created at the beginning of Forest
+     * Constructor to initialize Giraffe created at the beginning of Forest
      */
-    public giraffe(double x) {
+    public Giraffe(double x) {
 
 
         if ((nextgender % 2) == 0) {
@@ -51,7 +51,7 @@ public class giraffe extends Object {
         nextgender++;
 
         this.ReadyToReproduce = false;
-        this.dna = new gdna();
+        this.dna = new GiraffeDNA();
         this.age = 0;
         this.alive = true;
         this.id = nextGid++;
@@ -76,7 +76,7 @@ public class giraffe extends Object {
      * Constructor to initialize offsprings of giraffes through Sexual
      * Reproduction.
      */
-    public giraffe(giraffe parentfemale, giraffe parentmale) {
+    public Giraffe(Giraffe parentfemale, Giraffe parentmale) {
 
         if ((nextgender % 2) == 0) {
             this.gender = true;
@@ -85,7 +85,7 @@ public class giraffe extends Object {
         }
         nextgender++;
         this.ReadyToReproduce = false;
-        this.dna = new gdna(parentfemale, parentmale);
+        this.dna = new GiraffeDNA(parentfemale, parentmale);
         this.age = 0;
         this.alive = true;
         this.id = nextGid++;
@@ -135,7 +135,7 @@ public class giraffe extends Object {
             }
 
             if (this.gender == false && this.ReadyToReproduce == true) {
-                for (giraffe g : Forest.arrayOfAliveGiraffes) {
+                for (Giraffe g : Forest.arrayOfAliveGiraffes) {
                     if (g != null) {
                         if (g.gender == true && g.ReadyToReproduce == true&&(Math.abs(g.x-this.x)<=g.sight)) {
                             Forest.arrayOfReproducingGiraffesF.add(this);
@@ -212,10 +212,10 @@ public class giraffe extends Object {
         Forest.arrayOfDeadGiraffes.add(this);
     }
 
-    public int reproduce(giraffe g) {
+    public int reproduce(Giraffe g) {
         
         //System.out.println("OFFSPRING "+this.energy);
-        Forest.arrayOfGiraffesToBeAdded.add(new giraffe(this, g));
+        Forest.arrayOfGiraffesToBeAdded.add(new Giraffe(this, g));
         return 1;
     }
 
@@ -315,7 +315,7 @@ public class giraffe extends Object {
         
         int femaleright=0,femaleleft=0;
         double weightedfemalediff;
-        for(giraffe t:Forest.arrayOfAliveGiraffes){
+        for(Giraffe t:Forest.arrayOfAliveGiraffes){
             if(t!=null&&t.x>this.x&&t.x<=(this.x+this.sight)&&t.gender==false)
                 femaleright++;
             if(t!=null&&t.x<this.x&&t.x>=(this.x-this.sight)&&t.gender==false)
@@ -348,7 +348,7 @@ public class giraffe extends Object {
         
         int maleright=0,maleleft=0;
         double weightedmalediff;
-        for(giraffe t:Forest.arrayOfAliveGiraffes){
+        for(Giraffe t:Forest.arrayOfAliveGiraffes){
             if(t!=null&&t.x>this.x&&t.x<=(this.x+this.sight)&&t.gender)
                 maleright++;
             if(t!=null&&t.x<this.x&&t.x>=(this.x-this.sight)&&t.gender)

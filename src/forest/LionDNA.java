@@ -10,7 +10,7 @@ import java.util.Random;
  *
  * @author ANURAG
  */
-public class Ldna {
+public class LionDNA {
 
     double maxage;
     double maxspeed;
@@ -21,7 +21,7 @@ public class Ldna {
     double size;
     static Random r = new Random();
 
-    public Ldna() {
+    public LionDNA() {
 
         this.maxage = Constants.lmaxage;
         this.maxspeed = Constants.lmaxspeed;
@@ -33,7 +33,7 @@ public class Ldna {
 
     }
 
-    public Ldna(Lion parentfemale, Lion parentmale) {
+    public LionDNA(Lion parentfemale, Lion parentmale) {
 
         this.maxage = Constants.lmaxage;
         this.energytoreproduce = Constants.lenergytoreproduce;

@@ -10,7 +10,7 @@ import java.util.Random;
  *
  * @author ANURAG
  */
-public class gdna {
+public class GiraffeDNA {
 
     double height;
     double neckbodyratio;
@@ -20,7 +20,7 @@ public class gdna {
     AutosomalGene camouflage;
     Random r = new Random();
 
-    public gdna() {
+    public GiraffeDNA() {
         this.height = Constants.gheight;
         this.neckbodyratio = Constants.gratio;
         this.maxage = Constants.gmaxage;
@@ -29,7 +29,7 @@ public class gdna {
         this.camouflage = new AutosomalGene();
     }
 
-    public gdna(giraffe parentfemale, giraffe parentmale) {
+    public GiraffeDNA(Giraffe parentfemale, Giraffe parentmale) {
         this.camouflage = new AutosomalGene(parentfemale, parentmale);
         this.height = parentfemale.dna.height * Constants.gfertilizationfactor + parentmale.dna.height * (1 - Constants.gfertilizationfactor);
         this.neckbodyratio = parentfemale.dna.neckbodyratio * Constants.gfertilizationfactor + parentmale.dna.neckbodyratio * (1 - Constants.gfertilizationfactor);

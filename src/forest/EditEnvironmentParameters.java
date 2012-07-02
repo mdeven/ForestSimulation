@@ -218,8 +218,8 @@ public class EditEnvironmentParameters extends javax.swing.JFrame {
                 t.kill();
         }
         
-        gui.Arena.repaint();
-        gui.Arena.revalidate();
+        GUI.Arena.repaint();
+        GUI.Arena.revalidate();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -227,26 +227,26 @@ public class EditEnvironmentParameters extends javax.swing.JFrame {
             if(t!=null&&t.x>Constants.ArenaMaxX/2)
                 t.kill();
         }
-        gui.Arena.repaint();
-        gui.Arena.revalidate();
+        GUI.Arena.repaint();
+        GUI.Arena.revalidate();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        for(giraffe g:Forest.arrayOfAliveGiraffes){
+        for(Giraffe g:Forest.arrayOfAliveGiraffes){
             if(g!=null&&g.dna.camouflage.fromFemaleParent==true&&g.dna.camouflage.fromMaleParent&&g.x<=Constants.ArenaMaxX/2)
                 g.kill();
         }
-        gui.Arena.repaint();
-        gui.Arena.revalidate();
+        GUI.Arena.repaint();
+        GUI.Arena.revalidate();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        for(giraffe g:Forest.arrayOfAliveGiraffes){
+        for(Giraffe g:Forest.arrayOfAliveGiraffes){
             if(g!=null&&g.dna.camouflage.fromFemaleParent==true&&g.dna.camouflage.fromMaleParent&&g.x>=Constants.ArenaMaxX/2)
                 g.kill();
         }
-        gui.Arena.repaint();
-        gui.Arena.revalidate();
+        GUI.Arena.repaint();
+        GUI.Arena.revalidate();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -266,7 +266,7 @@ public class EditEnvironmentParameters extends javax.swing.JFrame {
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         try{
        Color todelete;
-        String s=JOptionPane.showInputDialog(gui.g6, "Enter name of colour without spaces in lowercase", "Enter Color", JOptionPane.INFORMATION_MESSAGE);
+        String s=JOptionPane.showInputDialog(GUI.g6, "Enter name of colour without spaces in lowercase", "Enter Color", JOptionPane.INFORMATION_MESSAGE);
         try{
         
         Field field = Class.forName("java.awt.Color").getField(s);
@@ -283,7 +283,7 @@ public class EditEnvironmentParameters extends javax.swing.JFrame {
         }
         }
         catch(Exception e){
-            JOptionPane.showMessageDialog(gui.g6, "An Error Occured", "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(GUI.g6, "An Error Occured", "Error", JOptionPane.WARNING_MESSAGE);
             
         }
     }//GEN-LAST:event_jButton8ActionPerformed
@@ -291,7 +291,7 @@ public class EditEnvironmentParameters extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         try{
        Color todelete;
-        String s=JOptionPane.showInputDialog(gui.g6, "Enter name of colour without spaces in lowercase", "Enter Color", JOptionPane.INFORMATION_MESSAGE);
+        String s=JOptionPane.showInputDialog(GUI.g6, "Enter name of colour without spaces in lowercase", "Enter Color", JOptionPane.INFORMATION_MESSAGE);
         try{
         
         Field field = Class.forName("java.awt.Color").getField(s);
@@ -308,7 +308,7 @@ public class EditEnvironmentParameters extends javax.swing.JFrame {
         }
         }
         catch(Exception e){
-            JOptionPane.showMessageDialog(gui.g6, "An Error Occured", "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(GUI.g6, "An Error Occured", "Error", JOptionPane.WARNING_MESSAGE);
             
         }
     }//GEN-LAST:event_jButton7ActionPerformed
