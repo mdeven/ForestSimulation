@@ -75,7 +75,7 @@ public class Forest {
      * ArrayOfAliveLions is the main Array for Lions. ArrayOfDeadLion is a
      * temporary ArrayList used to store the Lions that are to be deleted in the
      * next iteration. There are 2 Arrays arrayOfReproducingLionsF and
-     * arrayOfReproducingLionsM for female and male Lions as in Giraffes,who
+     * arrayOfReproducingLionsM for female and male Lions as in Giraffe,who
      * mate are stored at same index in those two arrays.
      */
     static ArrayList<Lion> arrayOfAliveLions = new ArrayList<Lion>();
@@ -275,7 +275,7 @@ public class Forest {
 
 
             /*
-             * Add Giraffes and Lions at the right time.
+             * Add Giraffe and Lions at the right time.
              */
 
             if (i == Constants.ArenaYearAfterGiraffesToBeAdded) {
@@ -313,7 +313,7 @@ public class Forest {
             arrayOfDeadBeams.clear();
 
             /*
-             * Clear Dead Giraffes.
+             * Clear Dead Giraffe.
              */
             arrayOfAliveGiraffes.removeAll(arrayOfDeadGiraffes);
             arrayOfDeadGiraffes.clear();
@@ -354,7 +354,7 @@ public class Forest {
             }
 
             /*
-             * Tick all Giraffes.
+             * Tick all Giraffe.
              */
             for (Giraffe g : arrayOfAliveGiraffes) {
                 if (g != null) {
@@ -641,7 +641,7 @@ public class Forest {
     }
 
     /*
-     * Computes average height of the Giraffes.
+     * Computes average height of the Giraffe.
      */
     public static double GiraffeAvgHeight() {
         if (arrayOfAliveGiraffes.size() <= 1) {
